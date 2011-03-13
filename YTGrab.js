@@ -3,17 +3,8 @@
     
     // define all variables here to satisfy jslint
     var title, urlmap, urls, _maxFmt, _maxUri, _c, _fmt, n;
-
-    String.prototype.between = function(left, right) {
-        var _a1, _a2;
-        _a1 = this.split(left);
-        if(_a1.length < 2) { return false; }
-        _a2 = _a1[1].split(right);
-        if(_a2.length < 2) { return false; }
-        return _a2[0];
-    };
-   
-    title = document.evaluate("//span[@id='eow-title']/attribute::title", document, null, XPathResult.STRING_TYPE, null).stringValue;
+  
+    title = document.evaluate("//span[@id='eow-title']/attribute::title", document, null, 2, null).stringValue;
     /*if(!title) { title = document.evaluate("//meta[@name='title']/attribute::content", document, null, XPathResult.STRING_TYPE, null).stringValue; }
     if(!title) { title = document.evaluate("/html/head/meta[@property='og:title']/attribute::content", document, null, XPathResult.STRING_TYPE, null).stringValue; } // alternative 1
     if(!title) { title = decodeURIComponent(s.between("&amp;title=", "&")); } // alternative 2
@@ -21,7 +12,7 @@
     if(!title) {
         return;
     }
-    urlmap = document.getElementsByTagName('embed')[0].getAttribute("flashvars").between("&fmt_url_map=", "&");
+    urlmap = /&fmt_url_map=(.+?)&/i.exec(document.getElementsByTagName('embed')[0].getAttribute("flashvars"))[1];
     if(!urlmap) {
         return;
     }
