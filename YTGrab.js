@@ -12,7 +12,7 @@
         for(n in urlmap) {
             n = urlmap[n].split("|");
             _fmt = parseInt(n[0], 10);
-            if(!isNaN(_fmt) && _fmt > _maxFmt) {
+            if(_fmt > _maxFmt) {
                 _maxFmt = _fmt;
                 _maxUri = n[1]; 
             }
