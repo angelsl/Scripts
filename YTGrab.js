@@ -2,7 +2,7 @@
 (function(){
     
     // define all variables here to satisfy jslint
-    var title = document.evaluate("//span[@id='eow-title']/attribute::title", document, null, 2, null).stringValue, urlmap = /&fmt_url_map=(.+?)&/i.exec(document.getElementsByTagName('embed')[0].getAttribute("flashvars"))[1], _maxFmt = 0, _maxUri = !1, _fmt, n;
+    var __=document,title = __.evaluate("//span[@id='eow-title']/attribute::title", __, null, 2, null).stringValue, urlmap = /&fmt_url_map=(.+?)&/i.exec(__.getElementsByTagName('embed')[0].getAttribute("flashvars"))[1], _maxFmt = 0, _maxUri = !1, _fmt, n;
     /*if(!title) { title = document.evaluate("//meta[@name='title']/attribute::content", document, null, XPathResult.STRING_TYPE, null).stringValue; }
     if(!title) { title = document.evaluate("/html/head/meta[@property='og:title']/attribute::content", document, null, XPathResult.STRING_TYPE, null).stringValue; } // alternative 1
     if(!title) { title = decodeURIComponent(s.between("&amp;title=", "&")); } // alternative 2
