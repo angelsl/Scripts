@@ -9,7 +9,7 @@
     if(!title) { title = s.between("'VIDEO_TITLE': '", "',"); } // alternative 3*/ // alternatives, uncomment if the first (which shouldn't break..) breaks
     if(title && urlmap) {
         urls = decodeURIComponent(urlmap).split(",");
-        for(n = 0; n < urls.length; n++) {
+        for(n in urls) {
             _c = urls[n].split("|");
             _fmt = parseInt(_c[0], 10);
             if(!isNaN(_fmt) && _fmt > _maxFmt) {
