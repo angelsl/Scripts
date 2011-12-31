@@ -1,7 +1,7 @@
-# JavaScript Bookmarklets
+# GreaseMonkey Scripts
 
-These are the original source to some bookmarklets I've written.
+These are the original source to some GreaseMonkey scripts I've written.
 
-Use [this](http://compressorrater.thruhere.net/) to minify them into something that can be inserted into a bookmark.
+Use [this](http://compressorrater.thruhere.net/) to minify them (if you wish).
 
 Enjoy.
