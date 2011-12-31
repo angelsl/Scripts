@@ -21,6 +21,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+(function(){
 var title = $('meta[name=title]').attr("content");
 var map = sortMap(getUrlMap());
 var ul = $("<ul style=\"list-style: disc inside none !important;\" />");
@@ -99,3 +100,4 @@ function getQuality(equality) {
     }
     return equality.toLowerCase();
 }
+})();
