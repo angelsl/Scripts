@@ -23,15 +23,16 @@
 
 (function(){
 var title = $('meta[name=title]').attr("content");
-var map = sortMap(getUrlMap());
+var map = processURLMap();
 var ul = $("<ul style=\"list-style: disc inside none !important;\" />");
 for(var q in map) {
-    var li = $("<li />").append("<strong>"+q+"</strong> &mdash;");
-    for(var idx = 0; idx < map[q].length; idx++) {
-        li.append(" ").append(map[q][idx]);
-    }
-    ul.append(li);
+	var li = $("<li><strong>"+q+"</strong> &mdash;</li>");
+	for(var idx = 0; idx < map[q].length; idx++) {
+		li.append(" ").append(map[q][idx]);
+	}
+	ul.append(li);
 }
+
 var container = $("<div id=\"angelsl-download-area-container\" style=\"height: auto; margin-bottom: 10px; display: none;\" />").append($("<div class=\"yt-rounded\" id=\"angelsl-download-area\" style=\"background: none repeat scroll 0 0 #FFFFFF; border: 0 none; border-radius: 3px 3px 3px 3px; padding:10px; box-shadow: 0 1px 1px #CCCCCC;\" />").append("<strong>Download</strong>").append(ul)).insertBefore($("#watch-info"));
 $("#watch-share").after($("<button data-tooltip-text=\"Download this video\" onclick=\";return false;\" title=\"Download this video\" type=\"button\" class=\"yt-uix-tooltip-reverse yt-uix-button yt-uix-tooltip\" id=\"watch-angelsl-download\" role=\"button\"><span class=\"yt-uix-button-content\">Download</span></button>")
     .click( function(eo)
@@ -40,24 +41,14 @@ $("#watch-share").after($("<button data-tooltip-text=\"Download this video\" onc
                 container.slideToggle("fast");
             }));
 
-function getUrlMap() {
-    var regx = /url_encoded_fmt_stream_map=(.+?)(?:&|$)/i.exec($("#movie_player").attr("flashvars"));
-    if(!regx) return false;
-    regx = decodeURIComponent(regx[1]).split(",");
-    var e = [];
-    for(var idx = 0; idx < regx.length; idx++) {
-        e.push(stringToDict(regx[idx]));
-    }
-    return e;
-}
-
-function sortMap(map) {
+function processURLMap() {
+    var regx = window.wrappedJSObject.yt.config_.PLAYER_CONFIG.args.url_encoded_fmt_stream_map.split(",");
     var ret = {};
-    for(var idx = 0; idx < map.length; idx++)
-    {
-        var q = getQuality(map[idx]["quality"]);
+    for(var idx = 0; idx < regx.length; idx++) {
+        var n = stringToDict(regx[idx]);
+		var q = getQuality(n["quality"]);
         if(!(q in ret)) ret[q] = [];
-        ret[q].push(getLink(map[idx]));
+		ret[q].push(getLink(n));
     }
     return ret;
 }
