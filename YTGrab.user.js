@@ -45,7 +45,7 @@ $("#watch-share").after($("<button data-tooltip-text=\"Download this video\" onc
             }));
 
 function processURLMap() {
-    var regx = window.wrappedJSObject.yt.config_.PLAYER_CONFIG.args.url_encoded_fmt_stream_map.split(",");
+    var regx = window.wrappedJSObject.yt.playerConfig.args.url_encoded_fmt_stream_map.split(",");
     var ret = {};
     for(var idx = 0; idx < regx.length; idx++) {
         var n = stringToDict(regx[idx]);
