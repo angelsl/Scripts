@@ -21,7 +21,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var testRegx = /.*wav$/i;
+var testRegx = /.*wav(?:\?.+)?$/i;
 var currentElem = null;
 $.fn.media.mapFormat('wav', 'winmedia');
 $("a").filter(function() { return testRegx.test($(this).attr('href')); }).click(function(e) 
