@@ -2,7 +2,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Greasemonkey
 // @description	  Inserts a download button on YouTube video pages
-// @version       1.2
+// @version       1.3
 // @include       http://www.youtube.com/watch*
 // @require       https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // ==/UserScript==
@@ -37,10 +37,11 @@ for(var q in map) {
 }
 
 var container = $("<div id=\"angelsl-download-area-container\" style=\"height: auto; margin-bottom: 10px; display: none;\" />").append($("<div class=\"yt-rounded\" id=\"angelsl-download-area\" style=\"background: none repeat scroll 0 0 #FFFFFF; border: 0 none; border-radius: 3px 3px 3px 3px; padding:10px; box-shadow: 0 1px 1px #CCCCCC;\" />").append("<strong>Download</strong>").append(ul)).insertBefore($("#watch-info"));
-$("#watch-share").after($("<button data-tooltip-text=\"Download this video\" onclick=\";return false;\" title=\"Download this video\" type=\"button\" class=\"yt-uix-tooltip-reverse yt-uix-button yt-uix-tooltip\" id=\"watch-angelsl-download\" role=\"button\"><span class=\"yt-uix-button-content\">Download</span></button>")
+$("#watch-share").after($("<button data-tooltip-text=\"Download this video\" onclick=\";return false;\" title=\"Download this video\" type=\"button\" class=\"yt-uix-tooltip-reverse yt-uix-button yt-uix-button-default yt-uix-tooltip\" id=\"watch-angelsl-download\" role=\"button\"><span class=\"yt-uix-button-content\">Download</span></button>")
     .click( function(eo)
             {
                 eo.preventDefault();
+				$(this).toggleClass("active");
                 container.slideToggle("fast");
             }));
 
