@@ -1,4 +1,8 @@
-# GreaseMonkey Scripts
+# Miscellaneous Scripts
+
+These are some scripts I've written over time to do some random tasks.
+
+## GreaseMonkey Scripts
 
 These are the original source to some GreaseMonkey scripts I've written.
 
