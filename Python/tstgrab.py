@@ -5,12 +5,18 @@ import json
 import urlparse
 import posixpath
 import os
-from datetime import date
+import sys
+from datetime import date, timedelta
 from pyPdf import PdfFileWriter, PdfFileReader
 
-LAYOUT_URL = "http://st.buuuk.in/ipad_layout"
+LAYOUT_URL = "http://st.buuuk.in/ipad_layout?day="
 
 def main():
+    global LAYOUT_URL
+    daysago = 0
+    if len(sys.argv) > 1:
+        daysago = sys.argv[1]
+    LAYOUT_URL += daysago
     print "Getting issue data from", LAYOUT_URL
     sections = json.loads(getfromurl(LAYOUT_URL))['sections']
     filenames = []
@@ -26,7 +32,7 @@ def main():
         fpdf = PdfFileReader(f)
         for pdfpg in fpdf.pages:
             out.addPage(pdfpg)
-    ofname = ''.join(['ST', date.today().strftime('%Y%m%d'), '.pdf'])
+    ofname = ''.join(['ST', (date.today() - timedelta(int(daysago))).strftime('%Y%m%d'), '.pdf'])
     of = open(ofname, 'wb')
     toclose.append(of)
     print 'Merging pages'
