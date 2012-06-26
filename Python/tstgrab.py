@@ -16,7 +16,7 @@ def main():
     daysago = 0
     if len(sys.argv) > 1:
         daysago = sys.argv[1]
-    LAYOUT_URL += daysago
+    LAYOUT_URL += str(daysago)
     print "Getting issue data from", LAYOUT_URL
     sections = json.loads(getfromurl(LAYOUT_URL))['sections']
     filenames = []
