@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name          YouTube Download Button
-// @namespace     https://github.com/angelsl/misc-Greasemonkey
+// @namespace     https://github.com/angelsl/misc-Scripts
 // @description	  Inserts a download button on YouTube video pages
-// @version       1.3
+// @version       1.31
+// @include       https://www.youtube.com/watch*
 // @include       http://www.youtube.com/watch*
 // @require       https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // ==/UserScript==
