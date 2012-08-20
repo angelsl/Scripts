@@ -25,15 +25,11 @@
 */
 
 (function(){
-function getURL()
-{
-    var param = eval(decodeURIComponent(window.wrappedJSObject.flashvars.sequence))[0].layerList[0].sequenceList[1].layerList.filter(function(x) { return x.name.toLowerCase() == "video"; })[0].param;
-    if(typeof param.hqURL !== 'undefined') return param.hqURL;
-    else if(typeof param.sdURL !== 'undefined') return param.sdURL;
-    else if(typeof param.ldURL !== 'undefined') return param.ldURL;
-    else return false;
-}
-var url = getURL();
-if(url)
-    $("#video_description").parent().after("<li><a class=\"button\" href=\"" + url + "\">Download</a></li>");
+var url = "#";
+var param = eval(decodeURIComponent(window.wrappedJSObject.flashvars.sequence))[0].layerList[0].sequenceList[1].layerList.filter(function(x) { return x.name.toLowerCase() == "video"; })[0].param;
+if(typeof param.hqURL !== 'undefined') url = param.hqURL;
+else if(typeof param.sdURL !== 'undefined') url = param.sdURL;
+else if(typeof param.ldURL !== 'undefined') url = param.ldURL;
+else return;
+$("#addto").parent().after("<li><a class=\"button\" href=\"" + url + "\" title=\"Use save link as...\">Download</a></li>");
 })();
