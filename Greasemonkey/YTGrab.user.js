@@ -2,7 +2,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description	  Inserts a download button on YouTube video pages
-// @version       1.31
+// @version       1.32
 // @include       https://www.youtube.com/watch*
 // @include       http://www.youtube.com/watch*
 // @require       https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
@@ -47,7 +47,7 @@ $("#watch-share").after($("<button data-tooltip-text=\"Download this video\" onc
             }));
 
 function processURLMap() {
-    var regx = window.wrappedJSObject.yt.playerConfig.args.url_encoded_fmt_stream_map.split(",");
+    var regx = unsafeWindow.yt.playerConfig.args.url_encoded_fmt_stream_map.split(",");
     var ret = {};
     for(var idx = 0; idx < regx.length; idx++) {
         var n = stringToDict(regx[idx]);
