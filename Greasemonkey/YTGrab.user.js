@@ -69,7 +69,7 @@ function stringToDict(entry) {
 }
 
 function getLink(entry) {
-    var url = entry["url"] + "&title=" + encodeURIComponent(title);
+    var url = entry["url"] + ((entry["url"].indexOf("signature=")!=-1) ? "" : ("&signature="+entry["sig"])) + "&title=" + encodeURIComponent(title);
     var tooltip = "Format ID: " + entry["itag"] + " | Quality: " + entry["quality"] + " | Mime: " + entry["type"];
     var desc = getType(entry["type"]).toUpperCase();
     return $("<a href=\"" + url + "\" title=\"" + tooltip + "\">" + desc + "</a>");
