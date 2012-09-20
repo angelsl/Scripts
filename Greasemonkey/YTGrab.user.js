@@ -2,7 +2,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description	  Inserts a download button on YouTube video pages
-// @version       1.33
+// @version       1.34
 // @include       https://www.youtube.com/watch*
 // @include       http://www.youtube.com/watch*
 // @require       https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js
