@@ -2,7 +2,7 @@
 // @name          Dailymotion Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description	  Inserts a download button on Dailymotion video pages
-// @version       1.0
+// @version       1.01
 // @include       http://www.dailymotion.com/video/*
 // @include       https://www.dailymotion.com/video/*
 // @require       https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js
@@ -26,7 +26,7 @@
 
 (function(){
 var url = "#";
-var param = eval(decodeURIComponent(window.wrappedJSObject.flashvars.sequence))[0].layerList[0].sequenceList[1].layerList.filter(function(x) { return x.name.toLowerCase() == "video"; })[0].param;
+var param = eval(decodeURIComponent(unsafeWindow.flashvars.sequence))[0].layerList[0].sequenceList[1].layerList.filter(function(x) { return x.name.toLowerCase() == "video"; })[0].param;
 if(typeof param.hqURL !== 'undefined') url = param.hqURL;
 else if(typeof param.sdURL !== 'undefined') url = param.sdURL;
 else if(typeof param.ldURL !== 'undefined') url = param.ldURL;
