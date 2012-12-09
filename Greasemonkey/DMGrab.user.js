@@ -1,14 +1,5 @@
-// ==UserScript==
-// @name          Dailymotion Download Button
-// @namespace     https://github.com/angelsl/misc-Scripts
-// @description	  Inserts a download button on Dailymotion video pages
-// @version       1.1
-// @include       http://www.dailymotion.com/video/*
-// @include       https://www.dailymotion.com/video/*
-// ==/UserScript==
-/* 
-	Copyright (C) 2012 angelsl
-
+/** Copyright (C) 2012 angelsl
+    
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -23,6 +14,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     jQuery v1.8.3 -deprecated,-css,-ajax,-ajax/jsonp,-ajax/script,-ajax/xhr,-effects,-offset,-dimensions jquery.com | jquery.org/license
+    
+// ==UserScript==
+// @name          Dailymotion Download Button
+// @namespace     https://github.com/angelsl/misc-Scripts
+// @description   Inserts a download button on Dailymotion video pages
+// @version       1.1
+// @updateURL     http://userscripts.org.nyud.net/scripts/source/141842.meta.js
+// @downloadURL   https://userscripts.org/scripts/source/141842.user.js
+// @include       http://www.dailymotion.com/video/*
+// @include       https://www.dailymotion.com/video/*
+// ==/UserScript==
 */
 
 (function(){

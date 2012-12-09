@@ -12,6 +12,8 @@
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
 // @version       1.6
+// @updateURL     http://userscripts.org.nyud.net/scripts/source/121925.meta.js
+// @downloadURL   https://userscripts.org/scripts/source/121925.user.js
 // @include       https://www.youtube.com/watch*
 // @include       http://www.youtube.com/watch*
 // ==/UserScript==
