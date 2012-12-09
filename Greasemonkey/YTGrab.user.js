@@ -3,7 +3,7 @@
     With contributions from LouCypher https://github.com/LouCypher
 
     YTGrab is distributed under the GNU LGPL v3 or later and comes with no warranty.
-    Full preamble at https://github.com/angelsl/misc-Scripts/blob/master/Greasemonkey/LICENSE.md
+    Full preamble at https://github.com/angelsl/misc-Scripts/blob/master/Greasemonkey/LICENSE.md#ytgrab
     
     jQuery v1.8.3 -deprecated,-css,-ajax,-ajax/jsonp,-ajax/script,-ajax/xhr,-effects,-offset,-dimensions jquery.com | jquery.org/license
     
