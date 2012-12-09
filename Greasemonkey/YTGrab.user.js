@@ -11,7 +11,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       1.6
+// @version       1.61
 // @updateURL     http://userscripts.org.nyud.net/scripts/source/121925.meta.js
 // @downloadURL   https://userscripts.org/scripts/source/121925.user.js
 // @include       https://www.youtube.com/watch*
@@ -19,7 +19,6 @@
 // ==/UserScript==
 */
 
-(function(){
 if (typeof unsafeWindow === 'undefined' || typeof unsafeWindow.yt === 'undefined') {
         var p = document.createElement('p');
         p.setAttribute('onclick', 'return window;');
@@ -73,4 +72,3 @@ for(var q in map) {
 
 $("#action-panel-share").after($("<div id=\"action-panel-sldownload\" class=\"action-panel-content hid\" data-panel-loaded=\"true\" />").append(ul));
 $("#watch7-secondary-actions > span").eq(1).after($("<span><button role=\"button\" data-trigger-for=\"action-panel-sldownload\" data-button-toggle=\"true\" onclick=\";return false;\" class=\"action-panel-trigger yt-uix-button yt-uix-button-hh-text\" type=\"button\"><span class=\"yt-uix-button-content\">Download </span></button></span>"));
-})();
