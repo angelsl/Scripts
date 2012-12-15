@@ -9,7 +9,10 @@
 // @name          YouTube Title on Top
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Moves YouTube video titles to above the video
-// @version       1.0
+// @version       1.01
+// @run-at        document-end
+// @updateURL     http://userscripts.org.nyud.net/scripts/source/153802.meta.js
+// @downloadURL   https://userscripts.org/scripts/source/153802.user.js
 // @include       https://www.youtube.com/watch*
 // @include       http://www.youtube.com/watch*
 // ==/UserScript==

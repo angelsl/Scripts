@@ -9,7 +9,8 @@
 // @name          Dailymotion Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on Dailymotion video pages
-// @version       1.1
+// @version       1.11
+// @run-at        document-end
 // @updateURL     http://userscripts.org.nyud.net/scripts/source/141842.meta.js
 // @downloadURL   https://userscripts.org/scripts/source/141842.user.js
 // @include       http://www.dailymotion.com/video/*
