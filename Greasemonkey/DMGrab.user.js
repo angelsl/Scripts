@@ -35,5 +35,5 @@ if(typeof param.hd720URL !== 'undefined') dldiv.append("&nbsp;<a href=\"" + para
 if(typeof param.hqURL !== 'undefined') dldiv.append("&nbsp;<a href=\"" + param.hqURL +"\" title=\"Use save link as...\">480</a>");
 if(typeof param.sdURL !== 'undefined') dldiv.append("&nbsp;<a href=\"" + param.sdURL +"\" title=\"Use save link as...\">384</a>");
 if(typeof param.ldURL !== 'undefined') dldiv.append("&nbsp;<a href=\"" + param.ldURL +"\" title=\"Use save link as...\">240</a>");
-$("#video_description").before(dldiv);
+$("#np_more_desc").parent().prepend(dldiv);
 });
