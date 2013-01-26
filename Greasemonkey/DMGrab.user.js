@@ -9,7 +9,7 @@
 // @name          Dailymotion Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on Dailymotion video pages
-// @version       1.13
+// @version       1.14
 // @run-at        document-end
 // @updateURL     http://userscripts.org.nyud.net/scripts/source/141842.meta.js
 // @downloadURL   https://userscripts.org/scripts/source/141842.user.js
@@ -35,5 +35,5 @@ if(typeof param.hd720URL !== 'undefined') dldiv.append("&nbsp;<a href=\"" + para
 if(typeof param.hqURL !== 'undefined') dldiv.append("&nbsp;<a href=\"" + param.hqURL +"\" title=\"Use save link as...\">480</a>");
 if(typeof param.sdURL !== 'undefined') dldiv.append("&nbsp;<a href=\"" + param.sdURL +"\" title=\"Use save link as...\">384</a>");
 if(typeof param.ldURL !== 'undefined') dldiv.append("&nbsp;<a href=\"" + param.ldURL +"\" title=\"Use save link as...\">240</a>");
-$("#np_more_desc").parent().prepend(dldiv);
+$("#np_more_desc").parent().parent().children().first().append(dldiv);
 });
