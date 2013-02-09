@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}AOTA Poller{% endblock %}
+{% block content %}
+    <table id="ovtable">
+    <tr><th style="width:20%">Device</th><th style="width:20%">Last Change</th><th style="width:20%">Last Poll</th><th style="width:40%">Firmware Name</th></tr>
+    {% for device in devices %}
+    <tr><td class="strong"><a href="{{ uri_for('polls', deviceidp=device.id) }}">{{ device.name }}</a></td><td><a href="{{ uri_for('aota', aotaid=device.change.key().id()) }}">{{ device.change.time }}</a></td><td><a href="{{ uri_for('ota', otaid=device.poll.key().id()) }}">{{ device.poll.time }}</a></td>
+    {% if device.poll.error is not none %}
+    <td class="error">Poll returned &quot;{{ device.poll.error|escape }}&quot;</td>
+    {% else %}
+    <td><a href="{{ device.poll.otaurl }}">{{ device.poll.otaname|escape }}</a></td>
+    {% endif %}
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block fragment %}<a href="/">AOTA Poller</a> > <a href="{% if change %}{{ uri_for('changes', deviceidc=poll.deviceid) }}{% else %}{{ uri_for('polls', deviceidp=poll.deviceid) }}{% endif %}">{{ name }} {% if change %}Change{% else %}Poll{% endif %} History</a> > {% endblock %}
+{% block title %}{% if change %}Change{% else %}Poll{% endif %} #{{ poll.key().id()}}{% endblock %}
+{% block content %}
+    {% if poll.error is none %}
+    <table>
+    <tr><th style="width:20%">Poll Time</th><th style="width:40%">Firmware Name</th><th style="width:40%">Firmware Checksum</th></tr>
+    <tr><td>{{ poll.time }}</td><td><a href="{{ poll.otaurl }}">{{ poll.otaname|escape }}</a></td><td>{{ poll.otachecksum }}</td></tr>
+    </table>
+    <h2>OTA Description</h2>
+    <pre class="quote">{{ poll.otadesc.strip()|escape }}</pre>
+    {% else %}
+    <h2>OTA at {{ poll.time }} returned error</h2>
+    <pre class="quote error">{{ poll.error|escape }}</pre>
+    {% endif %}
+{% endblock %}

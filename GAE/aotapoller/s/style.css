@@ -1,0 +1,51 @@
+body, pre {
+    font-family: Arial,sans-serif;
+}
+
+h1 {
+    font-size: x-large;
+}
+
+h2 {
+    font-size: large;
+}
+
+#footer {
+    font-size: x-small;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 2px 0;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th,td {
+    padding: 4px;
+}
+
+th {
+    border: none;
+    font-size: medium;
+    color: white;
+    background-color: #aaaaaa;
+}
+
+.error {
+    font-weight:bold;
+    color:red;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.quote {
+    margin-left: 3px;
+    padding: 0 5px;
+    border-left: #777777 2px solid;
+}

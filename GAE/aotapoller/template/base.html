@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="/s/style.css" />
+    <title>{% block title %}Base{% endblock %} - AOTA Poller</title>
+    {% endblock %}
+</head>
+<body>
+    <h1>{% block fragment %}{% endblock %}{{ self.title() }}</h1>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+        {% block footer %}
+        All times are in GMT. Written by angelsl. <a href="https://github.com/angelsl/misc-Scripts">Fork me on GitHub!</a>
+        {% endblock %}
+    </div>
+</body>
+</html>

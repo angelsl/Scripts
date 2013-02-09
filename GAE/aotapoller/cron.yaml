@@ -1,0 +1,4 @@
+cron:
+- description: semidaily poll
+  url: /cron
+  schedule: every 12 hours
