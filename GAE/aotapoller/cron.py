@@ -6,7 +6,7 @@ from lxml import etree
 from dbal import PollResult,DBAL,ArchivedPollResult
 
 def lenovo(self):
-    models = ["LenovoK860", "LenovoK860_ROW", "LenovoK860i", "IdeaTabA2109A-F"]
+    models = ["LenovoK860", "LenovoK860_ROW", "LenovoK860i", "LenovoK900", "LenovoK900_ROW", "IdeaTabA2109A-F"]
     for model in models:
         lenovo_internal(self, model)
 
