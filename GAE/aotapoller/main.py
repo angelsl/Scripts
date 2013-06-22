@@ -8,6 +8,8 @@ je = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.join(os.path.dirn
 devices = {"LenovoK860": "Lenovo K860",
            "LenovoK860_ROW": "Lenovo K860 (ROW)", 
            "LenovoK860i": "Lenovo K860i", 
+           "LenovoK900": "Lenovo K900", 
+           "LenovoK900_ROW": "Lenovo K900 (ROW)",
            "IdeaTabA2109A-F": "Lenovo IdeaTab A2109"}
            
 def show_error(handler, message):
