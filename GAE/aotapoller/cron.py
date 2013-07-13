@@ -21,7 +21,7 @@ def lenovo_internal(self, model):
             xml = etree.fromstring(resp.read())
             pr = PollResult(deviceid=model,
                 otaname=xml.xpath("/firmwareupdate/firmware/name")[0].text,
-                otadesc=lenovo_getdesc(xml),
+                otadesc=lenovo_getdesc(xml)[0:500],
                 otachecksum=xml.xpath("/firmwareupdate/firmware/md5")[0].text,
                 otaurl=xml.xpath("/firmwareupdate/firmware/downloadurl")[0].text)
             pr.put()
@@ -29,7 +29,7 @@ def lenovo_internal(self, model):
             if lastchange is None or lastchange.otachecksum != pr.otachecksum or lastchange.otaname != pr.otaname or lastchange.otaurl != pr.otaurl:
                 ArchivedPollResult(deviceid=model,
                     otaname=xml.xpath("/firmwareupdate/firmware/name")[0].text,
-                    otadesc=lenovo_getdesc(xml),
+                    otadesc=lenovo_getdesc(xml)[0:500],
                     otachecksum=xml.xpath("/firmwareupdate/firmware/md5")[0].text,
                     otaurl=xml.xpath("/firmwareupdate/firmware/downloadurl")[0].text).put()
             return
