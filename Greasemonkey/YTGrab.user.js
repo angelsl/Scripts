@@ -11,7 +11,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       1.67
+// @version       1.68
 // @run-at        document-end
 // @updateURL     http://userscripts.org.nyud.net/scripts/source/121925.meta.js
 // @downloadURL   https://userscripts.org/scripts/source/121925.user.js
@@ -33,6 +33,12 @@ Array.prototype.slswap = function(idx) { var l = this[0]; this[0] = this[idx % t
 var decipher = function(s) { return s.split("").slswap(34).slswap(19).reverse().slice(1).reverse().slice(3).slswap(24).reverse().join(""); };
 var $ = jQuery.noConflict();
 var title = $('meta[name=title]').attr("content");
+var fmt_list = unsafeWindow.ytplayer.config.args.fmt_list.split(",");
+var fmt_map = {};
+for(var idx = 0; idx < fmt_list.length; idx++) {
+    var a = fmt_list[idx].split("/");
+    fmt_map[a[0]] = a[1].split("x")[1] + "p";
+}
 var uefmss = unsafeWindow.ytplayer.config.args.url_encoded_fmt_stream_map.split(",");
 var map = {};
 for(var idx = 0; idx < uefmss.length; idx++) {
@@ -42,24 +48,7 @@ for(var idx = 0; idx < uefmss.length; idx++) {
         var c = a[idy].split("=");
         n[c[0]] = decodeURIComponent(c[1]);
     }
-    var qual = n["quality"].toLowerCase();
-    switch(qual) {
-        case "hd1080":
-            qual = "1080p";
-            break;
-        case "hd720":
-            qual = "720p";
-            break;
-        case "large":
-            qual = "480p";
-            break;
-        case "medium":
-            qual = "360p";
-            break;
-        case "small":
-            qual = "240p";
-            break;
-    }
+    var qual = fmt_map[n["itag"]];
 
     if(!(qual in map)) map[qual] = [];
     var fmtrgx = /^[-\w+]+\/(?:x-)?([-\w+]+)/.exec(n["type"]);       
