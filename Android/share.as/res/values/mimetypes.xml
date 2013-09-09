@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="mimetypes" translatable="false">
+        <item>text/plain</item>
+        <item>application/octet-stream</item>
+        <item>image/png</item>
+        <item>ext</item>
+        <item>mime</item>
+    </string-array>
+    <string-array name="mimenames">
+        <item>Text file</item>
+        <item>Octet stream</item>
+        <item>PNG image</item>
+        <item>@string/enter_ext</item>
+        <item>@string/enter_mime</item>
+    </string-array>
+    <array name="mimeicons">
+        <item>@drawable/textfile</item>
+        <item>@drawable/octetstream</item>
+        <item>@drawable/picture</item>
+        <item></item>
+        <item></item>
+    </array>
+    <string name="enter_ext">Enter extension...</string>
+    <string name="enter_mime">Enter MIME...</string>
+</resources>
