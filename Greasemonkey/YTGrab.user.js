@@ -11,7 +11,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       1.73
+// @version       1.74
 // @run-at        document-end
 // @updateURL     https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
@@ -36,8 +36,9 @@ GM_xmlhttpRequest({method: "GET", url: unsafeWindow.ytplayer.config.assets.js.re
     var sanitiseTitle = function(s) { return s.replace(/[\/\\\:\*\?\"\<\>\|]/g, ""); }
     var fmtrgx = /^[-\w+]+\/(?:x-)?([-\w+]+)/;
     var decipher = (function(u) {
-        var sres = /function ([a-zA-Z$0-9]+)\(a\){a=a\.split\(""\);([a-zA-Z0-9]+)\..*?return a\.join\(""\)};/g.exec(u);
-        return eval("(function(s){"+new RegExp("var " + sres[2] + "={.+?}};", "g").exec(u)[0]+sres[0]+"return "+sres[1]+"(s);})");
+        var sres = /function ([a-zA-Z$0-9]+)\(a\){a=a\.split\(""\);([a-zA-Z0-9]*)\.?.*?return a\.join\(""\)};/g.exec(u);
+        if(!sres) return (function(v){return v;}); 
+        else return eval("(function(s){"+(sres[2]!=""?(new RegExp("var " + sres[2] + "={.+?}};", "g").exec(u)[0]):"")+sres[0]+"return "+sres[1]+"(s);})");
     })(t.responseText);
     var title = $('meta[name=title]').attr("content");
     var fmt_list = unsafeWindow.ytplayer.config.args.fmt_list.split(",");
