@@ -11,7 +11,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       1.72
+// @version       1.73
 // @run-at        document-end
 // @updateURL     https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
@@ -19,6 +19,7 @@
 // @include       http://www.youtube.com/watch*
 // @require       https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
 // @grant         GM_xmlhttpRequest 
+// @grant         unsafeWindow
 // ==/UserScript==
 */
 
@@ -29,7 +30,7 @@ if (typeof unsafeWindow === 'undefined' || typeof unsafeWindow.ytplayer === 'und
 }
 
 if (typeof unsafeWindow.ytplayer !== 'undefined')
-GM_xmlhttpRequest({method: "GET", url: unsafeWindow.ytplayer.config.assets.js, onload: function(t) {
+GM_xmlhttpRequest({method: "GET", url: unsafeWindow.ytplayer.config.assets.js.replace(/^\/\//, "https://"), onload: function(t) {
     var uriencToMap = function(s) { var n = {}; var a = s.split("&"); 
         for(var idy = 0; idy < a.length; idy++) { var c = a[idy].split("="); n[c[0]] = decodeURIComponent(c[1]); } return n; };
     var sanitiseTitle = function(s) { return s.replace(/[\/\\\:\*\?\"\<\>\|]/g, ""); }
