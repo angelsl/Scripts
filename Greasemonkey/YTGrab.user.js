@@ -9,7 +9,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       1.75.1
+// @version       1.75.2
 // @run-at        document-end
 // @updateURL     https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
@@ -84,7 +84,8 @@ function main(decipher) {
     }
 
     $("#action-panel-share").after($("<div id=\"action-panel-sldownload\" class=\"action-panel-content hid\" data-panel-loaded=\"true\" />").append(ul));
-    $("#watch7-secondary-actions").find("> span").eq(1).after($("<span><button role=\"button\" data-trigger-for=\"action-panel-sldownload\" data-button-toggle=\"true\" onclick=\";return false;\" class=\"action-panel-trigger yt-uix-button yt-uix-button-text yt-uix-button-size-default\" type=\"button\"><span class=\"yt-uix-button-content\">Download </span></button></span>"));
+    if(!$("#watch8-secondary-actions").find("> span").eq(0).after($('<span><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon action-panel-trigger   yt-uix-button-opacity yt-uix-tooltip" type="button" onclick=";return false;" title="" data-trigger-for="action-panel-sldownload" data-button-toggle="true"><span class="yt-uix-button-content">Download</span></button></span>')).size())
+        $("#watch7-secondary-actions").find("> span").eq(1).after($("<span><button role=\"button\" data-trigger-for=\"action-panel-sldownload\" data-button-toggle=\"true\" onclick=\";return false;\" class=\"action-panel-trigger yt-uix-button yt-uix-button-text yt-uix-button-size-default\" type=\"button\"><span class=\"yt-uix-button-content\">Download </span></button></span>"));
 }
 
 if (typeof unsafeWindow.ytplayer !== 'undefined')
