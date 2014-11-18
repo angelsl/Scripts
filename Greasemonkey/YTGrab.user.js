@@ -9,14 +9,14 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       1.76
+// @version       1.76.1
 // @run-at        document-end
 // @updateURL     https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @include       https://www.youtube.com/*
 // @include       http://www.youtube.com/*
 // @require       https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
-// @require       https://gist.github.com/raw/2625891/waitForKeyElements.js
+// @require       https://gist.githubusercontent.com/angelsl/347fa95f00bb11c8eef3/raw/fd02ec05e3079cdd52cf5892a7ba27b67b6b6131/waitForKeyElements.js
 // @grant         GM_xmlhttpRequest
 // @grant         unsafeWindow
 // ==/UserScript==
@@ -51,7 +51,7 @@ function main2(dashmpd, decipher) {
         title = uwyca.title.replace(/[\/\\\:\*\?\"<\>\|]/g, ""),
         fmtrgx = /^[\-\w+]+\/(?:x-)?([\-\w+]+)/, 
         fmt_map = {}, idx, idz, n, a, qual, fmt, fmt_list, map, uefmss, dashlist, ul, q, div,
-		type, itag, maporder, fpsa, fpsb;
+		type, itag, maporder, fpsa, fpsb, fpsw = false;
 
     fmt_list = uwyca.fmt_list.split(",");
     for (idx = 0; idx < fmt_list.length; idx++) {
@@ -79,6 +79,7 @@ function main2(dashmpd, decipher) {
 
             if (!(qual in map)) { map[qual] = []; }
             fmt = fmtrgx.exec(n.type);
+			if (parseInt(n.fps) == 1) fpsw = 1;
             map[qual].push($("<a>DASH" + (fmt ? fmt[1] : "MISSINGNO.").toUpperCase() + "</a>").attr("href", n.url + ((n.url.indexOf("signature=") !== -1) ? "" : ("&signature=" + (n.sig || decipher(n.s)))) + "&title=" + title).attr("title", "Format ID: " + n.itag + " | Bitrate: " + n.bitrate + " | Mime: " + n.type  + " | Res: " + n.size + " | FPS: " + n.fps));
         }
     }
@@ -92,6 +93,7 @@ function main2(dashmpd, decipher) {
 				qual = type.indexOf("audio/") === 0 ? "Audio" : (n.attr("height") + 'p' + n.attr("frameRate"));
 				if (!(qual in map)) { map[qual] = []; }
 				fmt = fmtrgx.exec(type);
+				if (parseInt(n.attr("frameRate")) == 1) fpsw = 1;
 				map[qual].push($("<a>MPD" + (fmt ? fmt[1] : "MISSINGNO.").toUpperCase() + "</a>").attr("href", n.children("BaseURL").text() + "&title=" + title).attr("title", "Format ID: " + itag + " | Bitrate: " + n.attr("bandwidth") + " | Mime: " + type + (type.indexOf("audio/") === 0 ? " | Sample Rate: " + n.attr("audioSamplingRate") : " | Res: " + n.attr("width") + 'x' + n.attr("height") + " | FPS: " + n.attr("frameRate"))));
 			});
 		});
@@ -117,6 +119,7 @@ function main2(dashmpd, decipher) {
     $("#action-panel-share").after($("<div id=\"action-panel-sldownload\" class=\"action-panel-content hid\" data-panel-loaded=\"true\" />").append(ul));
     if(!$("#watch8-secondary-actions").find("> span").eq(0).after($('<span><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity action-panel-trigger yt-uix-button-opacity yt-uix-tooltip" type="button" onclick=";return false;" title="" data-trigger-for="action-panel-sldownload" data-button-toggle="true"><span class="yt-uix-button-content">Download</span></button></span>')).size())
         $("#watch7-secondary-actions").find("> span").eq(1).after($("<span><button role=\"button\" data-trigger-for=\"action-panel-sldownload\" data-button-toggle=\"true\" onclick=\";return false;\" class=\"action-panel-trigger yt-uix-button yt-uix-button-text yt-uix-button-size-default\" type=\"button\"><span class=\"yt-uix-button-content\">Download </span></button></span>"));
+	if (fpsw) ul.after($("<p>You may notice that some videos have a reported FPS of 1. This is not a bug with YTGrab; YouTube is reporting this value. The actual files have a proper FPS.</p>"));
 }
 
 function run() {
