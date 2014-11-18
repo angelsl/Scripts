@@ -9,13 +9,14 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       1.75.4
+// @version       1.76
 // @run-at        document-end
 // @updateURL     https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
-// @include       https://www.youtube.com/watch*
-// @include       http://www.youtube.com/watch*
+// @include       https://www.youtube.com/*
+// @include       http://www.youtube.com/*
 // @require       https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
+// @require       https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant         GM_xmlhttpRequest
 // @grant         unsafeWindow
 // ==/UserScript==
@@ -47,7 +48,7 @@ function main2(dashmpd, decipher) {
             return n;
         },
         uwyca = unsafeWindow.ytplayer.config.args,
-        title = encodeURIComponent($('meta[name=title]').attr("content").replace(/[\/\\\:\*\?\"<\>\|]/g, "")),
+        title = uwyca.title.replace(/[\/\\\:\*\?\"<\>\|]/g, ""),
         fmtrgx = /^[\-\w+]+\/(?:x-)?([\-\w+]+)/, 
         fmt_map = {}, idx, idz, n, a, qual, fmt, fmt_list, map, uefmss, dashlist, ul, q, div,
 		type, itag, maporder, fpsa, fpsb;
@@ -118,10 +119,13 @@ function main2(dashmpd, decipher) {
         $("#watch7-secondary-actions").find("> span").eq(1).after($("<span><button role=\"button\" data-trigger-for=\"action-panel-sldownload\" data-button-toggle=\"true\" onclick=\";return false;\" class=\"action-panel-trigger yt-uix-button yt-uix-button-text yt-uix-button-size-default\" type=\"button\"><span class=\"yt-uix-button-content\">Download </span></button></span>"));
 }
 
-if (typeof unsafeWindow.ytplayer !== 'undefined')
-    { GM_xmlhttpRequest({method: "GET", url: unsafeWindow.ytplayer.config.assets.js.replace(/^\/\//, "https://"), onload: function (t) { main((function (u) {
-        "use strict"; var sres = /function ([a-zA-Z$0-9]+)\(a\)\{a=a\.split\(""\);([a-zA-Z0-9]*)\.?.*?return a\.join\(""\)\};/g.exec(u);
-        if (!sres) { return function (v) { return v; }; }
-        return eval("(function(s){" + (sres[2] !== "" ? (new RegExp("var " + sres[2] + "={.+?}};", "g").exec(u)[0]) : "") + sres[0] + "return " + sres[1] + "(s);})");
-    }(t.responseText))); }}); }
+function run() {
+	if (typeof unsafeWindow.ytplayer !== 'undefined')
+		{ GM_xmlhttpRequest({method: "GET", url: unsafeWindow.ytplayer.config.assets.js.replace(/^\/\//, "https://"), onload: function (t) { main((function (u) {
+			"use strict"; var sres = /function ([a-zA-Z$0-9]+)\(a\)\{a=a\.split\(""\);([a-zA-Z0-9]*)\.?.*?return a\.join\(""\)\};/g.exec(u);
+			if (!sres) { return function (v) { return v; }; }
+			return eval("(function(s){" + (sres[2] !== "" ? (new RegExp("var " + sres[2] + "={.+?}};", "g").exec(u)[0]) : "") + sres[0] + "return " + sres[1] + "(s);})");
+		}(t.responseText))); }}); }
+}
 
+waitForKeyElements("#watch8-secondary-actions", run);
