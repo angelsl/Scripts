@@ -9,7 +9,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       1.75.3
+// @version       1.75.4
 // @run-at        document-end
 // @updateURL     https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
@@ -28,6 +28,14 @@ if (typeof unsafeWindow === 'undefined' || typeof unsafeWindow.ytplayer === 'und
 }
 
 function main(decipher) {
+	var dashmpd = unsafeWindow.ytplayer.config.args.dashmpd, mpbsrgx = /\/s\/([\w\.]+)/, mpbs;
+	if (typeof dashmpd !== 'undefined') {
+		mpbs = mpbsrgx.exec(dashmpd); if(mpbs) dashmpd = dashmpd.replace(mpbsrgx, "/signature/"+decipher(mpbs[1]));
+		GM_xmlhttpRequest({method: "GET", url: dashmpd, onload: function (t) { main2(t.responseText, decipher); }});
+	} else main2(false, decipher);
+}
+
+function main2(dashmpd, decipher) {
     "use strict";
     var
         uriencToMap = function (s) {
@@ -40,8 +48,9 @@ function main(decipher) {
         },
         uwyca = unsafeWindow.ytplayer.config.args,
         title = encodeURIComponent($('meta[name=title]').attr("content").replace(/[\/\\\:\*\?\"<\>\|]/g, "")),
-        fmtrgx = /^[\-\w+]+\/(?:x-)?([\-\w+]+)/,
-        fmt_map = {}, idx, idz, n, a, qual, fmt, fmt_list, map, uefmss, dashlist, ul, q, div;
+        fmtrgx = /^[\-\w+]+\/(?:x-)?([\-\w+]+)/, 
+        fmt_map = {}, idx, idz, n, a, qual, fmt, fmt_list, map, uefmss, dashlist, ul, q, div,
+		type, itag, maporder, fpsa, fpsb;
 
     fmt_list = uwyca.fmt_list.split(",");
     for (idx = 0; idx < fmt_list.length; idx++) {
@@ -49,7 +58,7 @@ function main(decipher) {
         fmt_map[a[0]] = a[1].split("x")[1] + "p";
     }
 
-    map = {"1080p": [], "720p": [], "480p": [], "360p": [], "240p": [], "144p": [], "Audio": [], "Unknown": []};
+    map = {};
     uefmss = uwyca.url_encoded_fmt_stream_map.split(",");
     for (idx = 0; idx < uefmss.length; idx++) {
         n = uriencToMap(uefmss[idx]);
@@ -65,16 +74,37 @@ function main(decipher) {
         dashlist = dashlist.split(",");
         for (idx = 0; idx < dashlist.length; idx++) {
             n = uriencToMap(dashlist[idx]);
-            qual = n.type.indexOf("audio/") === 0 ? "Audio" : (n.itag in fmt_map) ? (fmt_map[n.itag]) : (("size" in n) ? (n.size.split('x')[1] + 'p') : ("Unknown"));
+            qual = n.type.indexOf("audio/") === 0 ? "Audio" : (("size" in n) ? (n.size.split('x')[1] + 'p' + n.fps) : (n.itag in fmt_map) ? (fmt_map[n.itag]) : ("Unknown"));
 
             if (!(qual in map)) { map[qual] = []; }
             fmt = fmtrgx.exec(n.type);
-            map[qual].push($("<a>DASH" + (fmt ? fmt[1] : "MISSINGNO.").toUpperCase() + "</a>").attr("href", n.url + ((n.url.indexOf("signature=") !== -1) ? "" : ("&signature=" + (n.sig || decipher(n.s)))) + "&title=" + title).attr("title", "Format ID: " + n.itag + " | Bitrate: " + n.bitrate + " | Mime: " + n.type));
+            map[qual].push($("<a>DASH" + (fmt ? fmt[1] : "MISSINGNO.").toUpperCase() + "</a>").attr("href", n.url + ((n.url.indexOf("signature=") !== -1) ? "" : ("&signature=" + (n.sig || decipher(n.s)))) + "&title=" + title).attr("title", "Format ID: " + n.itag + " | Bitrate: " + n.bitrate + " | Mime: " + n.type  + " | Res: " + n.size + " | FPS: " + n.fps));
         }
     }
+	
+	if (dashmpd !== false) {
+		dashmpd = $($.parseXML(dashmpd));
+		dashmpd.find("AdaptationSet").each(function() {
+			q = $(this); type = q.attr("mimeType");
+			q.children("Representation").each(function() {
+				n = $(this); itag = n.attr("id");
+				qual = type.indexOf("audio/") === 0 ? "Audio" : (n.attr("height") + 'p' + n.attr("frameRate"));
+				if (!(qual in map)) { map[qual] = []; }
+				fmt = fmtrgx.exec(type);
+				map[qual].push($("<a>MPD" + (fmt ? fmt[1] : "MISSINGNO.").toUpperCase() + "</a>").attr("href", n.children("BaseURL").text() + "&title=" + title).attr("title", "Format ID: " + itag + " | Bitrate: " + n.attr("bandwidth") + " | Mime: " + type + (type.indexOf("audio/") === 0 ? " | Sample Rate: " + n.attr("audioSamplingRate") : " | Res: " + n.attr("width") + 'x' + n.attr("height") + " | FPS: " + n.attr("frameRate"))));
+			});
+		});
+	}
 
+	maporder = Object.keys(map);
+	maporder.sort(function(a,b) {
+		if((a == "Audio" && b == "Unknown") || (b == "Audio" && a != "Unknown")) return -1;
+		if ((b == "Audio" && a == "Unknown") || (a == "Audio" && b != "Unknown")) return 1;
+		fpsa = a.split('p')[1] || 0; fpsb = b.split('p')[1] || 0; if (fpsa != fpsb) return parseInt(fpsb)-parseInt(fpsa);
+		return parseInt(b)-parseInt(a); });
     ul = $("<ul class=\"watch-extras-section\" />");
-    for (q in map) {
+    for (n = 0; n < maporder.length; ++n) {
+		q = maporder[n];
         if (map[q].length < 1) { continue; }
         div = $("<div class=\"content\" />").append(map[q][0]);
         for (idz = 1; idz < map[q].length; idz++) {
