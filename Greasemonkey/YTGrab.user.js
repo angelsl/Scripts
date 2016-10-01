@@ -9,7 +9,7 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       2.01
+// @version       2.02
 // @run-at        document-end
 // @updateURL     https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
@@ -283,24 +283,19 @@ function main2(dashmpd, decipher) {
     if (fpsw) ul.after($("<p>You may notice that some videos have a reported FPS of 1. This is not a bug with YTGrab; YouTube is reporting this value. The actual files have a proper FPS.</p>"));
 }
 
-(function (selectorTxt, actionFunction, bWaitOnce, iframeSelector) {
+// waitForKeyElements from https://gist.github.com/BrockA/2625891
+
+function waitForKeyElements(selectorTxt, actionFunction) {
     var targetNodes, btargetsFound;
-    if (typeof iframeSelector == "undefined")
-        targetNodes = $(selectorTxt);
-    else
-        targetNodes = $(iframeSelector).contents()
-        .find(selectorTxt);
+    targetNodes = $(selectorTxt);
     if (targetNodes && targetNodes.length > 0) {
         btargetsFound = true;
         targetNodes.each(function() {
             var jThis = $(this);
             var alreadyFound = jThis.data('alreadyFound') || false;
             if (!alreadyFound) {
-                var cancelFound = actionFunction(jThis);
-                if (cancelFound)
-                    btargetsFound = false;
-                else
-                    jThis.data('alreadyFound', true);
+                actionFunction(jThis);
+                jThis.data('alreadyFound', true);
             }
         });
     } else {
@@ -309,22 +304,15 @@ function main2(dashmpd, decipher) {
     var controlObj = waitForKeyElements.controlObj || {};
     var controlKey = selectorTxt.replace(/[^\w]/g, "_");
     var timeControl = controlObj[controlKey];
-    if (btargetsFound && bWaitOnce && timeControl) {
-        clearInterval(timeControl);
-        delete controlObj[controlKey]
-    } else {
-        if (!timeControl) {
-            timeControl = setInterval(function() {
-                    waitForKeyElements(selectorTxt,
-                        actionFunction,
-                        bWaitOnce,
-                        iframeSelector
-                    );
-                },
-                300
-            );
-            controlObj[controlKey] = timeControl;
-        }
+
+    if (!timeControl) {
+        timeControl = setInterval(function() {
+                waitForKeyElements(selectorTxt, actionFunction);
+            },
+            300
+        );
+        controlObj[controlKey] = timeControl;
     }
     waitForKeyElements.controlObj = controlObj;
-})("#watch8-secondary-actions", run);
+};
+waitForKeyElements("#watch8-secondary-actions", run);
