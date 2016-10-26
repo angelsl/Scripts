@@ -3,7 +3,7 @@
 // @namespace     https://github.com/angelsl/misc-Greasemonkey
 // @description	  Inserts a HTML5 <audio> tag into the page if a WAV link is clicked on TPW's Voice lines
 // @include       http://theportalwiki.com/wiki/*_voice_lines*
-// @require       https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
+// @require       https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js
 // @require       http://jquery.malsup.com/media/jquery.media.js?v.92
 // ==/UserScript==
 /* 
