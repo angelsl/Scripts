@@ -1,6 +1,6 @@
 /** Originally written by angelsl
  This script is distributed under the GNU LGPL v3 or later and comes with no warranty.
- Full preamble at https://github.com/angelsl/misc-Scripts/blob/master/Greasemonkey/LICENSE.md#tpw
+ Full preamble at https://github.com/angelsl/misc-Scripts/blob/master/Greasemonkey/LICENSE.md#lgpl
 
 // ==UserScript==
 // @name          theportalwiki.com voice lines embed
