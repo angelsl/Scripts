@@ -9,13 +9,13 @@
 // @name          YouTube Download Button
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
-// @version       2.02
+// @version       2.03
 // @run-at        document-end
 // @updateURL     https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @include       https://www.youtube.com/*
 // @include       http://www.youtube.com/*
-// @require       https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
+// @require       https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js
 // @grant         GM_xmlhttpRequest
 // @grant         unsafeWindow
 // ==/UserScript==
