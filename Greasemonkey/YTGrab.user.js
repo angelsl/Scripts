@@ -15,7 +15,7 @@
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @include       https://www.youtube.com/*
 // @include       http://www.youtube.com/*
-// @require       https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js
+// @require       https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @grant         GM_xmlhttpRequest
 // @grant         unsafeWindow
 // ==/UserScript==
