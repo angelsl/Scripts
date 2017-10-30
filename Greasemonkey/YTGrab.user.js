@@ -10,7 +10,7 @@
 // @namespace     https://github.com/angelsl/misc-Scripts
 // @description   Inserts a download button on YouTube video pages
 // @version       2.03
-// @run-at        document-end
+// @run-at        document-start
 // @updateURL     https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @downloadURL   https://github.com/angelsl/misc-Scripts/raw/master/Greasemonkey/YTGrab.user.js
 // @include       https://www.youtube.com/*
@@ -266,26 +266,28 @@ function main2(dashmpd, decipher) {
         if (fpsa != fpsb) return parseInt(fpsb) - parseInt(fpsa);
         return parseInt(b) - parseInt(a);
     });
-    ul = $("<ul class=\"watch-extras-section\" />");
+    ul = $("<ul />");
     for (n = 0; n < maporder.length; ++n) {
         q = maporder[n];
         if (map[q].length < 1) {
             continue;
         }
-        div = $("<div class=\"content\" />").append(map[q][0]);
+        div = $("<div />").append(map[q][0]);
         for (idz = 1; idz < map[q].length; idz++) {
             div.append(" ").append(map[q][idz]);
         }
-        ul.append($("<li><h4 class=\"title\" style=\"font-weight: bold; color: #333333;\">" + q + "</h4></li>").append(div));
+        ul.append($("<li><h4 style=\"font-weight: bold; color: #333333;\">" + q + "</h4></li>").append(div));
     }
-    $("#action-panel-share").after($("<div id=\"action-panel-sldownload\" class=\"action-panel-content hid\" data-panel-loaded=\"true\" />").append(ul));
-    $("#watch8-secondary-actions").find("> div").eq(1).after($('<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity action-panel-trigger yt-uix-button-opacity yt-uix-tooltip" type="button" onclick=";return false;" title="" data-trigger-for="action-panel-sldownload" data-button-toggle="true"><span class="yt-uix-button-content">Download</span></button>')).size();
+    $("ytd-expander.description").after(
+        $("<div id=\"panel-sldownload\" style=\"padding: 16px;\" class=\"style-scope yt-sharing-renderer\" />")
+          .append($("<h3></h3>").text(uwyca.title))
+          .append(ul)
+    );
     if (fpsw) ul.after($("<p>You may notice that some videos have a reported FPS of 1. This is not a bug with YTGrab; YouTube is reporting this value. The actual files have a proper FPS.</p>"));
 }
 
 // waitForKeyElements from https://gist.github.com/BrockA/2625891
-
-function waitForKeyElements(selectorTxt, actionFunction) {
+function waitForKeyElements(selectorTxt, actionFunction, once) {
     var targetNodes, btargetsFound;
     targetNodes = $(selectorTxt);
     if (targetNodes && targetNodes.length > 0) {
@@ -305,14 +307,28 @@ function waitForKeyElements(selectorTxt, actionFunction) {
     var controlKey = selectorTxt.replace(/[^\w]/g, "_");
     var timeControl = controlObj[controlKey];
 
-    if (!timeControl) {
+    if (!timeControl && (!once || !btargetsFound)) {
         timeControl = setInterval(function() {
-                waitForKeyElements(selectorTxt, actionFunction);
+                waitForKeyElements(selectorTxt, actionFunction, once);
             },
             300
         );
         controlObj[controlKey] = timeControl;
-    }
+    } else if (timeControl && btargetsFound && once) {
+        clearInterval(timeControl);
+        delete controlObj[controlKey];
+    }    
+
     waitForKeyElements.controlObj = controlObj;
 };
-waitForKeyElements("#watch8-secondary-actions", run);
+waitForKeyElements("span[slot=\"date\"]", function(e) {
+    var btn = $("<a>(Download)</a>").click(function() {
+        var divs = $("#panel-sldownload");
+        if (divs.length > 0) {
+            divs.remove();
+        } else {
+            run();
+        }
+    });
+    e.append(" ").append(btn);
+}, true);
